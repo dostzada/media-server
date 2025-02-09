@@ -1,6 +1,6 @@
 services:
     ashley:
-        image: nginx:1.26-alpine-perl
+        image: nginx:1.27-alpine-perl
         ports:
             - 80:80
         
