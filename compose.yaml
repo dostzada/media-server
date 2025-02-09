@@ -1,6 +1,6 @@
 services:
     hello-world:
-        image: nginx
+        image: nginx:1.26-alpine-perl
         ports:
             - 80:80
         
