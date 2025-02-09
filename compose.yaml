@@ -1,3 +1,6 @@
 services:
     hello-world:
-        image: hello-world:latest
+        image: nginx
+        ports:
+            - 80:80
+        
