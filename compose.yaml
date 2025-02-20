@@ -2,6 +2,7 @@ volumes:
   qbittorrent_config:
   rflood_config:
   torrents:
+  prowlarr:
 
 services:
   # Torrent Client
