@@ -141,6 +141,8 @@ services:
       - TZ=${TZ}
     volumes:
       - prowlarr:/config
+    depends_on:
+      - flaresolverr
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
     image: ghcr.io/flaresolverr/flaresolverr:latest
