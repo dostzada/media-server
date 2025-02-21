@@ -4,7 +4,7 @@ volumes:
   prowlarr:
 
 services:
-  # Torrent Client
+  # Torrent Clients
   qbittorrent:
     container_name: qbittorrent
     hostname: qbittorrent
