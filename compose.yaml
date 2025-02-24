@@ -5,128 +5,63 @@ volumes:
 
 services:
   # Torrent Clients
-  qbittorrent:
-    container_name: qbittorrent
-    hostname: qbittorrent
-    image: ghcr.io/hotio/qbittorrent:release-5.0.4
+  pia:
+    image: qmcgaw/gluetun:v3.40
+    container_name: pia
+    # init: true
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=private internet access
+      - OPENVPN_USER=${PIA_USERNAME}
+      - OPENVPN_PASSWORD=${PIA_PASSWORD}
+      - SERVER_REGIONS=CA Montreal
+      - OPENVPN_PROTOCOL=udp
+      - NONROOT=no
+      - DOT=on
+      - BLOCK_MALICIOUS=on
+      - BLOCK_SURVEILLANCE=off
+      - UNBLOCK=
+      - FIREWALL=on
+      - FIREWALL_OUTBOUND_SUBNETS=
+      - HTTPPROXY=on
+      - HTTPPROXY_LOG=true
+      - HTTPPROXY_USER=${HTTP_PROXY}
+      - HTTPPROXY_PASSWORD=${HTTP_PASSWORD}
+      - SHADOWSOCKS=on
+      - SHADOWSOCKS_LOG=on
+      - SHADOWSOCKS_PASSWORD=${SHADOW_PASSWORD}
+    network_mode: bridge
+    volumes:
+      - ./servarr/gluetun/private-internet-access:/gluetun
     ports:
-      - "8080:8080"
+      # pia
+      - 8080:8080/tcp
+      - 8080:8080/tcp
+      - 8388:8388/udp
+      - 9091:9091
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    
+  qbittorrent:
+    image: ghcr.io/hotio/qbittorrent:release-5.0.4
+    container_name: qbittorrent
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - UMASK=002
       - TZ=${TZ}
       - WEBUI_PORTS=8080/tcp,8080/udp
-      - VPN_ENABLED=true
-      - VPN_CONF=wg0
-      - VPN_PROVIDER=pia
-      - VPN_LAN_NETWORK=192.168.1.0/24
-      - VPN_LAN_LEAK_ENABLED=false
-      - VPN_EXPOSE_PORTS_ON_LAN=true
-      - VPN_AUTO_PORT_FORWARD=true
-      - VPN_AUTO_PORT_FORWARD_TO_PORTS=${QB_PORT}
-      - VPN_KEEP_LOCAL_DNS=false
-      - VPN_FIREWALL_TYPE=auto
-      - VPN_HEALTHCHECK_ENABLED=true
-      - VPN_PIA_USER=${PIA_USERNAME}
-      - VPN_PIA_PASS=${PIA_PASSWORD}
-      # - VPN_PIA_PREFERRED_REGION
-      - VPN_PIA_DIP_TOKEN=no
-      - VPN_PIA_PORT_FORWARD_PERSIST=false
-      - PRIVOXY_ENABLED=false
-      - UNBOUND_ENABLED=false
+      - TORRENTING_PORT=6881
     volumes:
-      - ./servarr/qbittorrent/config:/config
-      - torrents:/data
-    cap_add:
-      - NET_ADMIN
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1 #
-      - net.ipv6.conf.all.disable_ipv6=1 #
-    devices:
-      - /dev/net/tun:/dev/net/tun
-  qbitmanage:
-    container_name: qbitmanage
-    hostname: qbitmanage
-    image: ghcr.io/hotio/qbitmanage:release-4.1.17
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK=002
-      - TZ=${TZ}
-      - ARGS
-      - VPN_ENABLED=true
-      - VPN_CONF=wg0
-      - VPN_PROVIDER=pia
-      - VPN_LAN_NETWORK=192.168.1.0/24
-      - VPN_LAN_LEAK_ENABLED=false
-      - VPN_EXPOSE_PORTS_ON_LAN=true
-      - VPN_AUTO_PORT_FORWARD=true
-      - VPN_AUTO_PORT_FORWARD_TO_PORTS=${QB_PORT}
-      - VPN_KEEP_LOCAL_DNS=false
-      - VPN_FIREWALL_TYPE=auto
-      - VPN_HEALTHCHECK_ENABLED=true
-      - VPN_PIA_USER=${PIA_USERNAME}
-      - VPN_PIA_PASS=${PIA_PASSWORD}
-      # - VPN_PIA_PREFERRED_REGION
-      - VPN_PIA_DIP_TOKEN=no
-      - VPN_PIA_PORT_FORWARD_PERSIST=false
-      - PRIVOXY_ENABLED=false
-      - UNBOUND_ENABLED=false
-    volumes:
-      - ./servarr/qbittorrent/config:/config
-      - torrents:/data
-    cap_add:
-      - NET_ADMIN
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1 #
-      - net.ipv6.conf.all.disable_ipv6=1 #
-    devices:
-      - /dev/net/tun:/dev/net/tun
-
-  rflood:
-    container_name: rflood
-    image: ghcr.io/hotio/rflood:release-208b9df
-    hostname: rflood
-    ports:
-      - "3000:3000"
-      - "5000:5000"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK=002
-      - TZ=${TZ}
-      - FLOOD_AUTH=false
-      - ARGS
-      - FLOOD_ARGS
-      - VPN_ENABLED=true
-      - VPN_CONF=wg0
-      - VPN_PROVIDER=pia
-      - VPN_LAN_NETWORK=192.168.1.0/24
-      - VPN_LAN_LEAK_ENABLED=true
-      - VPN_EXPOSE_PORTS_ON_LAN=false
-      - VPN_AUTO_PORT_FORWARD=false
-      - VPN_AUTO_PORT_FORWARD_TO_PORTS=${QB_PORT}
-      - VPN_KEEP_LOCAL_DNS=true
-      - VPN_FIREWALL_TYPE=auto
-      - VPN_HEALTHCHECK_ENABLED=true
-      - VPN_PIA_USER=${PIA_USERNAME}
-      - VPN_PIA_PASS=${PIA_PASSWORD}
-      # - VPN_PIA_PREFERRED_REGION
-      - VPN_PIA_DIP_TOKEN=no
-      - VPN_PIA_PORT_FORWARD_PERSIST=false
-      - PRIVOXY_ENABLED=false
-      - UNBOUND_ENABLED=false
-    volumes:
-      - rflood_config:/config
-      - torrents:/data
-    cap_add:
-      - NET_ADMIN
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
-      - net.ipv6.conf.all.disable_ipv6=1
-    devices:
-      - /dev/net/tun:/dev/net/tun
+      - ./servarr/qbit/config:/config
+      - ./servarr/downloads:/downloads #optional
+    depends_on:
+      - pia
+    network_mode: service:pia
+    restart: unless-stopped
 
   prowlarr:
     container_name: prowlarr
