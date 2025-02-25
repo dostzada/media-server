@@ -103,7 +103,7 @@ services:
       - /mnt/truenas/media/media/movies:/movies
       - /mnt/truenas/media/torrents:/downloads
     ports:
-      - 7879:7878
+      - 7878:7878
     restart: unless-stopped
   # Sonarr for TV Shows
   sonarr:
@@ -118,7 +118,7 @@ services:
       - /mnt/truenas/media/media/tv:/tv
       - /mnt/truenas/media/torrents:/downloads
     ports:
-      - 8988:8989
+      - 8989:8989
     restart: unless-stopped
 
   # CWA for books
