@@ -75,7 +75,6 @@ services:
       - TZ=${TZ}
     volumes:
       - prowlarr:/config
-    network_mode: bridge
     depends_on:
       - flaresolverr
   flaresolverr:
@@ -90,7 +89,6 @@ services:
     ports:
       - "${PORT:-8191}:8191"
     restart: unless-stopped
-    network_mode: bridge
 
   # Add the Arr Apps
   radarr:
@@ -104,7 +102,6 @@ services:
       - ./servarr/radarr/config:/config
       - /mnt/truenas/media/media/movies:/movies
       - /mnt/truenas/media/torrents:/downloads
-    network_mode: bridge
     ports:
       - 7879:7878
     restart: unless-stopped
@@ -120,7 +117,6 @@ services:
       - ./servarr/sonarr/config:/config
       - /mnt/truenas/media/media/tv:/tv
       - /mnt/truenas/media/torrents:/downloads
-    network_mode: bridge
     ports:
       - 8988:8989
     restart: unless-stopped
