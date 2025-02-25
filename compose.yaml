@@ -45,7 +45,7 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
-    
+
   qbittorrent:
     image: ghcr.io/hotio/qbittorrent:release-5.0.4
     container_name: qbittorrent
@@ -57,7 +57,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - ./servarr/qbit/config:/config
-      - ./servarr/downloads:/downloads #optional
+      - /mnt/truenas/media/torrents:/downloads #optional
     depends_on:
       - pia
     network_mode: service:pia
@@ -100,8 +100,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ./servarr/radarr/config:/config
-      #- /home/khaled/media/media/movies:/movies
-      #- /home/khaled/media/torrents/downloads:/downloads
+      - /mnt/truenas/media/media/movies:/movies
+      - /mnt/truenas/media/torrents:/downloads
     network_mode: bridge
     ports:
       - 7879:7878
@@ -116,8 +116,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ./servarr/sonarr/config:/config
-      #- /home/khaled/media/media/tv:/tv
-      #- /home/khaled/media/torrents/downloads:/downloads
+      - /mnt/truenas/media/media/tv:/tv
+      - /mnt/truenas/media/torrents:/downloads
     network_mode: bridge
     ports:
       - 8988:8989
