@@ -75,6 +75,7 @@ services:
       - TZ=${TZ}
     volumes:
       - prowlarr:/config
+    network_mode: bridge
     depends_on:
       - flaresolverr
   flaresolverr:
@@ -89,6 +90,7 @@ services:
     ports:
       - "${PORT:-8191}:8191"
     restart: unless-stopped
+    network_mode: bridge
 
   # Add the Arr Apps
   radarr:
