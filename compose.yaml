@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   qbittorrent:
-    image: ghcr.io/hotio/qbittorrent:release-5.0.4
+    image: hotio/qbittorrent:release-5.0.4
     container_name: qbittorrent
     environment:
       - PUID=${PUID}
@@ -64,7 +64,7 @@ services:
 
   prowlarr:
     container_name: prowlarr
-    image: ghcr.io/hotio/prowlarr:release-28212d6
+    image: hotio/prowlarr:release-1.31.2.4975
     ports:
       - "9696:9696"
     environment:
@@ -78,7 +78,7 @@ services:
       - flaresolverr
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
-    image: ghcr.io/flaresolverr/flaresolverr:v3.3.21
+    image: flaresolverr/flaresolverr:v3.3.21
     container_name: flaresolverr
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
@@ -140,7 +140,7 @@ services:
     restart: unless-stopped
 
   calibre-web-automated-book-downloader:
-    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:20250214
+    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:sha-17fdb87
     environment:
       FLASK_PORT: 8084
       FLASK_DEBUG: false
