@@ -1,7 +1,6 @@
 volumes:
-  rflood_config:
-  torrents:
   prowlarr:
+    external: true
 
 services:
   # Torrent Clients
