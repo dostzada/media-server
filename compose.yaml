@@ -1,9 +1,9 @@
 volumes:
   prowlarr:
     external: true
-  profilearr:
+  profilarr:
     external: true
-    name: profilearr
+    name: profilarr
 
 services:
   # Torrent Clients
@@ -128,7 +128,7 @@ services:
         ports:
             - 6868:6868
         volumes:
-            - profilearr:/config
+            - profilarr:/config
         environment:
             - TZ=${TZ}
         restart: unless-stopped

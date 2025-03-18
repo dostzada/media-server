@@ -38,6 +38,11 @@
       "matchDatasources": ["docker"],
       "matchPackageNames": ["ghcr.io/calibrain/calibre-web-automated-book-downloader"],
       "versioning": "loose"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["santiagosayshey/profilarr"],
+      "versioning": "loose"
     }
   ]
 }
