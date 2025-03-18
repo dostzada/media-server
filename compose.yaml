@@ -1,6 +1,9 @@
 volumes:
   prowlarr:
     external: true
+  profilearr:
+    external: true
+    name: profilearr
 
 services:
   # Torrent Clients
@@ -119,6 +122,16 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
+  profilarr:
+        image: santiagosayshey/profilarr:v1.0.0
+        container_name: profilarr
+        ports:
+            - 6868:6868
+        volumes:
+            - profilearr:/config
+        environment:
+            - TZ=${TZ}
+        restart: unless-stopped
 
   # CWA for books
   calibre-web-automated:
