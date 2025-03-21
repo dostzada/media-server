@@ -123,7 +123,7 @@ services:
       - 8989:8989
     restart: unless-stopped
   profilarr:
-        image: santiagosayshey/profilarr:v1.0.0
+        image: santiagosayshey/profilarr:v1.0.1
         container_name: profilarr
         ports:
             - 6868:6868
