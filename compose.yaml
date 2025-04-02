@@ -59,7 +59,7 @@ services:
       - TORRENTING_PORT=6881
     volumes:
       - ./servarr/qbit/config:/config
-      - /mnt/truenas/media/downloads:/downloads #optional
+      - /mnt/ugreen/media/downloads:/downloads #optional
     depends_on:
       - pia
     network_mode: service:pia
@@ -102,8 +102,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ./servarr/radarr/config:/config
-      - /mnt/truenas/media/media/movies:/movies
-      - /mnt/truenas/media/downloads:/downloads
+      - /mnt/ugreen/media/movies:/movies
+      - /mnt/ugreen/media/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -117,8 +117,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ./servarr/sonarr/config:/config
-      - /mnt/truenas/media/media/tv:/tv
-      - /mnt/truenas/media/downloads:/downloads
+      - /mnt/ugreen/media/tv:/tv
+      - /mnt/ugreen/media/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
