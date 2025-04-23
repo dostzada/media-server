@@ -153,7 +153,7 @@ services:
     restart: unless-stopped
 
   calibre-web-automated-book-downloader:
-    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:20250404
+    image: ghcr.io/calibrain/calibre-web-automated-book-downloader:20250422
     environment:
       FLASK_PORT: 8084
       FLASK_DEBUG: false
