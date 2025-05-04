@@ -4,6 +4,9 @@ volumes:
   profilarr:
     external: true
     name: profilarr
+  bazarr-config:
+    external: true
+    name: bazarr-config
 
 services:
   # Torrent Clients
@@ -132,6 +135,20 @@ services:
         environment:
             - TZ=${TZ}
         restart: unless-stopped
+  bazarr:
+    container_name: bazarr
+    image: hotio/bazarr:release-1.5.1
+    ports:
+      - "6767:6767"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=002
+      - TZ=${TZ}
+      - WEBUI_PORTS=6767/tcp,6767/udp
+    volumes:
+      - bazarr-config:/config
+      - /mnt/ugreen/media/bazarr:/data
 
   # CWA for books
   calibre-web-automated:
