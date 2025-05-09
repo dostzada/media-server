@@ -193,3 +193,16 @@ services:
   cloudflarebypassforscraping:
     image: ghcr.io/sarperavci/cloudflarebypassforscraping:latest
     restart: unless-stopped
+
+  beszel-agent:
+    image: "henrygd/beszel-agent"
+    container_name: "beszel-agent"
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # monitor other disks / partitions by mounting a folder in /extra-filesystems
+      - /mnt/ugreen/media:/extra-filesystems/ugreen:ro
+    environment:
+      LISTEN: 45876
+      KEY: ${BESZEL}
