@@ -7,6 +7,9 @@ volumes:
   bazarr-config:
     external: true
     name: bazarr-config
+  huntarr:
+    external: true
+    name: huntarr
 
 services:
   # Torrent Clients
@@ -206,3 +209,14 @@ services:
     environment:
       LISTEN: 45876
       KEY: ${BESZEL}
+
+  huntarr:
+    image: huntarr/huntarr:8.0.3
+    container_name: huntarr
+    restart: unless-stopped
+    ports:
+      - "9705:9705"
+    volumes:
+      - huntarr:/config
+    environment:
+      - TZ=${TZ}
