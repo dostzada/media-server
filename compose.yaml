@@ -55,7 +55,7 @@ services:
     restart: unless-stopped
 
   qbittorrent:
-    image: hotio/qbittorrent:release-5.1.0
+    image: hotio/qbittorrent:release-5.0.4
     container_name: qbittorrent
     environment:
       - PUID=${PUID}
