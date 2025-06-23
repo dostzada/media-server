@@ -10,6 +10,9 @@ volumes:
   huntarr:
     external: true
     name: huntarr
+  kapowarr:
+    external: true
+    name: kapowarr
 
 services:
   # Torrent Clients
@@ -220,3 +223,14 @@ services:
       - huntarr:/config
     environment:
       - TZ=${TZ}
+
+  kapowarr:
+    container_name: kapowarr
+    image: mrcas/kapowarr:v1.2.0
+    restart: unless-stopped
+    volumes:
+      - "kapowarr:/app/db"
+      - "/mnt/ugreen/media/downloads:/app/temp_downloads"
+      - "/mnt/ugreen/media/comics:/comics-1"
+    ports:
+      - 5656:5656
