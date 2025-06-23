@@ -13,6 +13,9 @@ volumes:
   kapowarr:
     external: true
     name: kapowarr
+  komga:
+    external: true
+    name: komga
 
 services:
   # Torrent Clients
@@ -234,3 +237,16 @@ services:
       - "/mnt/ugreen/media/comics:/comics-1"
     ports:
       - 5656:5656
+
+  komga:
+    image: gotson/komga:1.22.0
+    container_name: komga
+    restart: unless-stopped
+    volumes:
+      - komga:/config
+      - /mnt/ugreen/media/comics:/data
+    ports:
+      - 25600:25600
+    user: "1000:100"
+    environment:
+      - TZ=${TZ}
