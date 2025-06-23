@@ -247,6 +247,5 @@ services:
       - /mnt/ugreen/media/comics:/data
     ports:
       - 1234:25600
-    user: "1000:1000"
     environment:
       - TZ=${TZ}
