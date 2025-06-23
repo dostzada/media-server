@@ -239,14 +239,14 @@ services:
       - 5656:5656
 
   komga:
-    image: gotson/komga:1.22.0
+    image: gotson/komga:1.21.3
     container_name: komga
     restart: unless-stopped
     volumes:
       - komga:/config
       - /mnt/ugreen/media/comics:/data
     ports:
-      - 25600:25600
+      - 1234:25600
     user: "1000:1000"
     environment:
       - TZ=${TZ}
