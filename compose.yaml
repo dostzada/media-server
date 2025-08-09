@@ -152,7 +152,7 @@ services:
   
   bazarr:
     container_name: bazarr
-    image: hotio/bazarr:release-1.5.1
+    image: ghcr.io/hotio/bazarr:release-1.5.2
     restart: unless-stopped
     ports:
       - "6767:6767"
