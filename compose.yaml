@@ -237,7 +237,7 @@ services:
       - TZ=${TZ}
   
   boxarr:
-    image: ghcr.io/iongpt/boxarr:1.3.7
+    image: ghcr.io/iongpt/boxarr:1.4.1
     container_name: boxarr
     ports:
       - 8888:8888
