@@ -19,6 +19,9 @@ volumes:
   cleanuparr:
     external: true
     name: cleanuparr
+  boxarr:
+    external: true
+    name: boxarr
 
 services:
   # Torrent Clients
@@ -231,4 +234,15 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - UMASK=0022
+      - TZ=${TZ}
+  
+  boxarr:
+    image: ghcr.io/iongpt/boxarr:1.3.7
+    container_name: boxarr
+    ports:
+      - 8888:8888
+    volumes:
+      - boxarr:/config
+    restart: unless-stopped
+    environment:
       - TZ=${TZ}
