@@ -22,6 +22,9 @@ volumes:
   boxarr:
     external: true
     name: boxarr
+  backrest:
+    external: true
+    name: backrest
 
 services:
   # Torrent Clients
@@ -246,3 +249,26 @@ services:
     restart: unless-stopped
     environment:
       - TZ=${TZ}
+
+  # Backup service for Docker volumes using Backrest
+  backrest:
+    image: garethgeorge/backrest:v1.10
+    container_name: backrest
+    hostname: backrest
+    restart: unless-stopped
+    volumes:
+      - ./backrest/data:/data
+      - backrest:/config
+      - ./backrest/cache:/cache
+      - ./backrest/tmp:/tmp
+      # - backrest/rclone:/root/.config/rclone # Mount for rclone config (needed when using rclone remotes)
+      - /var/lib/docker/volumes:/userdata  # Mount local paths to backup
+      # - /path/to/local/repos:/repos     # Mount local repos (optional for remote storage)
+    environment:
+      - BACKREST_DATA=/data
+      - BACKREST_CONFIG=/config/config.json
+      - XDG_CACHE_HOME=/cache
+      - TMPDIR=/tmp
+      - TZ=America/Los_Angeles
+    ports:
+      - "9898:9898"
