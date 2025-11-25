@@ -25,6 +25,9 @@ volumes:
   backrest:
     external: true
     name: backrest
+  listenarr_data:
+    external: true
+    name: listenarr_data
 
 services:
   # Torrent Clients
@@ -143,6 +146,18 @@ services:
       - /mnt/ugreen/media/downloads:/downloads
     ports:
       - 8989:8989
+    restart: unless-stopped
+
+  listenarr:
+    image: ghcr.io/therobbiedavis/listenarr:canary
+    user: "1000:100"  ## Replace with your desired UID and GID
+    ports:
+      - "5000:5000"
+    environment:
+      - LISTENARR_PUBLIC_URL=https://listenarr.dostzada.org
+      - TZ=${TZ}
+    volumes:
+      - listenarr_data:/app/config
     restart: unless-stopped
   
   profilarr:
