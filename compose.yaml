@@ -106,7 +106,7 @@ services:
       - flaresolverr
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
-    image: flaresolverr/flaresolverr:v3.4.5
+    image: flaresolverr/flaresolverr:v3.4.6
     container_name: flaresolverr
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
