@@ -156,6 +156,8 @@ services:
     environment:
       - LISTENARR_PUBLIC_URL=https://listenarr.dostzada.org
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
       - listenarr_data:/app/config
     restart: unless-stopped
