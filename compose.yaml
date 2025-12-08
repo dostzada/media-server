@@ -159,7 +159,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     volumes:
-      - listenarr_data:/app/config
+      - ./listenarr_data:/app/config
     restart: unless-stopped
   
   profilarr:
