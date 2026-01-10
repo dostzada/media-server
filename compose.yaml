@@ -25,6 +25,9 @@ volumes:
   backrest:
     external: true
     name: backrest
+  qui:
+    name: qui
+    external: true
 
 services:
   # Torrent Clients
@@ -85,6 +88,26 @@ services:
       - pia
     network_mode: service:pia
     restart: unless-stopped
+
+  qui:
+    image: ghcr.io/autobrr/qui:v1.12
+    container_name: qui
+    restart: unless-stopped
+    ports:
+      - "7476:7476"
+    volumes:
+      - qui:/config
+      - ./servarr/qbit/config:/config
+      - /mnt/ugreen/media/downloads:/downloads #optional
+    depends_on:
+      - pia
+    #environment:
+    #  - QUI__OIDC_ENABLED=true
+    #  - QUI__OIDC_ISSUER=https://auth.example.com/realms/main
+    #  - QUI__OIDC_CLIENT_ID=qui
+    #  - QUI__OIDC_CLIENT_SECRET=super-secret-value
+    #  - QUI__OIDC_REDIRECT_URL=https://qui.example.com/api/auth/oidc/callback
+    #  - QUI__OIDC_DISABLE_BUILT_IN_LOGIN=true
 
   prowlarr:
     container_name: prowlarr
