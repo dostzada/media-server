@@ -100,7 +100,7 @@ services:
       - ./servarr/qbit/config:/config
       - /mnt/ugreen/media/downloads:/downloads #optional
     depends_on:
-      - pia
+      - qbittorrent
     #environment:
     #  - QUI__OIDC_ENABLED=true
     #  - QUI__OIDC_ISSUER=https://auth.example.com/realms/main
