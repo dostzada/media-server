@@ -247,7 +247,7 @@ services:
       - TZ=${TZ}
 
   cleanuparr:
-    image: ghcr.io/cleanuparr/cleanuparr:2.4.7
+    image: ghcr.io/cleanuparr/cleanuparr:2.5.1
     container_name: cleanuparr
     restart: unless-stopped
     ports:
