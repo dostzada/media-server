@@ -90,7 +90,7 @@ services:
     restart: unless-stopped
 
   qui:
-    image: ghcr.io/autobrr/qui:v1.12
+    image: ghcr.io/autobrr/qui:v1.13
     container_name: qui
     restart: unless-stopped
     ports:
