@@ -213,7 +213,7 @@ services:
       KEY: ${BESZEL}
 
   huntarr:
-    image: huntarr/huntarr:9.0.5
+    image: huntarr/huntarr:9.1.0
     container_name: huntarr
     restart: unless-stopped
     ports:
