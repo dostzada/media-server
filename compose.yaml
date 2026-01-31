@@ -28,6 +28,15 @@ volumes:
   qui:
     name: qui
     external: true
+  romm:
+    name: romm
+    external: true
+  romm-db:
+    name: romm-db
+    external: true
+  romm-redis:
+    name: romm-redis
+
 
 services:
   # Torrent Clients
@@ -295,3 +304,50 @@ services:
       - TZ=America/Los_Angeles
     ports:
       - "9898:9898"
+    
+  romm:
+    image: rommapp/romm:4.6.1
+    container_name: romm
+    restart: unless-stopped
+    environment:
+      - DB_HOST=romm-db
+      - DB_NAME=romm # Should match MARIADB_DATABASE in mariadb
+      - DB_USER=romm-user # Should match MARIADB_USER in mariadb
+      - DB_PASSWD=${ROMM_DB} # Should match MARIADB_PASSWORD in mariadb
+      - ROMM_AUTH_SECRET_KEY=${ROMM_KEY} # Generate a key with `openssl rand -hex 32`
+      - SCREENSCRAPER_USER=rayishu # These are the recommended metadata providers
+      - SCREENSCRAPER_PASSWORD=${SCREENSCRAPER} # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#screenscraper
+      #- RETROACHIEVEMENTS_API_KEY= # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#retroachievements
+      #- STEAMGRIDDB_API_KEY= # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#steamgriddb
+      #- HASHEOUS_API_ENABLED=true # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#hasheous
+    volumes:
+      - romm:/romm/resources # Resources fetched from IGDB (covers, screenshots, etc.)
+      - romm-redis:/redis-data # Cached data for background tasks
+      - /mnt/ugreen/media/games:/romm/library # Your game library. Check https://docs.romm.app/latest/Getting-Started/Folder-Structure/ for more details.
+      - /mnt/ugreen/media/games/assets:/romm/assets # Uploaded saves, states, etc.
+      - /mnt/ugreen/media/games/config:/romm/config # (Optional) Path where config.yml is stored
+    ports:
+      - 8340:8080
+    depends_on:
+      romm-db:
+        condition: service_healthy
+        restart: true
+
+  romm-db:
+    image: mariadb:latest
+    container_name: romm-db
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD= # Use a unique, secure password
+      - MARIADB_DATABASE=romm
+      - MARIADB_USER=romm-user
+      - MARIADB_PASSWORD=${ROMM_DB}
+    volumes:
+      - romm-db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      start_interval: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
