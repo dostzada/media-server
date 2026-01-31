@@ -338,7 +338,7 @@ services:
     container_name: romm-db
     restart: unless-stopped
     environment:
-      - MARIADB_ROOT_PASSWORD= # Use a unique, secure password
+      - MARIADB_ROOT_PASSWORD=${ROMM_DB} # Use a unique, secure password
       - MARIADB_DATABASE=romm
       - MARIADB_USER=romm-user
       - MARIADB_PASSWORD=${ROMM_DB}
