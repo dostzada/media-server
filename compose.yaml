@@ -120,7 +120,7 @@ services:
 
   prowlarr:
     container_name: prowlarr
-    image: ghcr.io/hotio/prowlarr:release-1.37.0.5076
+    image: ghcr.io/hotio/prowlarr:release-2.3.0.5236
     restart: unless-stopped
     ports:
       - "9696:9696"
