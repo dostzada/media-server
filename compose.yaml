@@ -41,7 +41,7 @@ volumes:
 services:
   # Torrent Clients
   pia:
-    image: qmcgaw/gluetun:v3.41.0
+    image: qmcgaw/gluetun:v3.41.1
     container_name: pia
     # init: true
     cap_add:
