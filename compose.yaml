@@ -284,7 +284,7 @@ services:
 
   # Backup service for Docker volumes using Backrest
   backrest:
-    image: garethgeorge/backrest:v1.11
+    image: garethgeorge/backrest:v1.12
     container_name: backrest
     hostname: backrest
     restart: unless-stopped
