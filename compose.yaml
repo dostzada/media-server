@@ -221,17 +221,6 @@ services:
       LISTEN: 45876
       KEY: ${BESZEL}
 
-  huntarr:
-    image: huntarr/huntarr:9.3.5
-    container_name: huntarr
-    restart: unless-stopped
-    ports:
-      - "9705:9705"
-    volumes:
-      - huntarr:/config
-    environment:
-      - TZ=${TZ}
-
   kapowarr:
     container_name: kapowarr
     image: mrcas/kapowarr:v1.2.0
