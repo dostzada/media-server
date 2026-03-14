@@ -223,7 +223,7 @@ services:
 
   kapowarr:
     container_name: kapowarr
-    image: mrcas/kapowarr:v1.2.0
+    image: mrcas/kapowarr:v1.3.0
     restart: unless-stopped
     volumes:
       - "kapowarr:/app/db"
