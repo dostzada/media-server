@@ -99,7 +99,7 @@ services:
     restart: unless-stopped
 
   qui:
-    image: ghcr.io/autobrr/qui:v1.16
+    image: ghcr.io/autobrr/qui:v1.17
     container_name: qui
     restart: unless-stopped
     ports:
