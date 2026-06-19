@@ -348,7 +348,8 @@ services:
 
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:2.35.1
-    restart: always
+    restart: unless-stopped
+    container_name: audiobookshelf
     ports:
       - 13378:80
     volumes:
