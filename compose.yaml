@@ -36,6 +36,11 @@ volumes:
     external: true
   romm-redis:
     name: romm-redis
+  audio-config:
+    name: audio-config
+    external: true
+  audio-metadata:
+    name: audio-metadata
 
 
 services:
@@ -340,3 +345,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:2.35.1
+    restart: always
+    ports:
+      - 13378:80
+    volumes:
+      - /mnt/ugreen/media/books:/books
+      - /mnt/ugreen/media/audiobooks:/audiobooks
+      - /mnt/ugreen/media/podcasts:/podcasts
+      - audio-config:/config
+      - audio-metadata:/metadata
+    environment:
+      - TZ=${TZ}
