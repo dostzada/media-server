@@ -300,7 +300,7 @@ services:
       - "9898:9898"
     
   romm:
-    image: rommapp/romm:4.8.1
+    image: rommapp/romm:4.9.2
     container_name: romm
     restart: unless-stopped
     environment:
