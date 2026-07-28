@@ -347,7 +347,7 @@ services:
       retries: 5
 
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:2.35.1
+    image: ghcr.io/advplyr/audiobookshelf:2.36.0
     restart: unless-stopped
     container_name: audiobookshelf
     ports:
