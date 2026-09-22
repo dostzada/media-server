@@ -238,7 +238,7 @@ services:
       - 5656:5656
 
   komga:
-    image: gotson/komga:1.26.3
+    image: gotson/komga:1.27.1
     container_name: komga
     restart: unless-stopped
     volumes:
