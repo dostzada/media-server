@@ -41,6 +41,12 @@ volumes:
     external: true
   audio-metadata:
     name: audio-metadata
+  chaptarr:
+    name: chaptarr
+  bookorbit:
+    name: bookorbit
+  bookorbit-db:
+    name: bookorbit-db
 
 
 services:
@@ -360,3 +366,87 @@ services:
       - audio-metadata:/metadata
     environment:
       - TZ=${TZ}
+  # Books: Chaptarr grabs/imports ebooks + audiobooks, BookOrbit serves them.
+  # Both mount the same host folders and run as the same PUID/PGID, so files
+  # Chaptarr imports show up in BookOrbit on its next library scan.
+  chaptarr:
+    image: chaptarr/chaptarr:0.9.965
+    container_name: chaptarr
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=002
+      - TZ=${TZ}
+    volumes:
+      - chaptarr:/config
+      - /mnt/ugreen/media/books:/ebooks
+      - /mnt/ugreen/media/audiobooks:/audiobooks
+      - /mnt/ugreen/media/downloads:/downloads
+    ports:
+      - 8789:8789
+
+  bookorbit:
+    image: ghcr.io/bookorbit/bookorbit:3.1.0
+    container_name: bookorbit
+    restart: unless-stopped
+    init: true
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - POSTGRES_HOST=bookorbit-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=bookorbit
+      - POSTGRES_PASSWORD=${BOOKORBIT_DB} # Should match POSTGRES_PASSWORD in bookorbit-db
+      - POSTGRES_DB=bookorbit
+      - JWT_SECRET=${BOOKORBIT_JWT} # Generate with `openssl rand -hex 32`
+      - PODCAST_ENCRYPTION_KEY=${BOOKORBIT_PODCAST_KEY} # Generate with `openssl rand -hex 32`
+      - SETUP_BOOTSTRAP_TOKEN=${BOOKORBIT_SETUP_TOKEN} # Needed once for first-run admin setup
+      - APP_URL=${BOOKORBIT_URL} # e.g. http://<server-ip>:3000 — used for Kobo/email links
+      - LIBRARY_BROWSE_ROOT=/books # Folder picker only shows the book mounts below
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+      - bookorbit:/data
+      # Same host folders Chaptarr imports into
+      - /mnt/ugreen/media/books:/books/ebooks
+      - /mnt/ugreen/media/audiobooks:/books/audiobooks
+    ports:
+      - 3000:3000
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 30s
+    depends_on:
+      bookorbit-db:
+        condition: service_healthy
+        restart: true
+
+  bookorbit-db:
+    image: pgvector/pgvector:pg18
+    container_name: bookorbit-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=bookorbit
+      - POSTGRES_PASSWORD=${BOOKORBIT_DB}
+      - POSTGRES_DB=bookorbit
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - bookorbit-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookorbit -d bookorbit"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
