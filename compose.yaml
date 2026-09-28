@@ -382,6 +382,7 @@ services:
       - chaptarr:/config
       - /mnt/ugreen/media/books:/ebooks
       - /mnt/ugreen/media/audiobooks:/audiobooks
+      - /mnt/ugreen/media/comics:/comics
       - /mnt/ugreen/media/downloads:/downloads
     ports:
       - 8789:8789
@@ -412,6 +413,7 @@ services:
       # Same host folders Chaptarr imports into
       - /mnt/ugreen/media/books:/books/ebooks
       - /mnt/ugreen/media/audiobooks:/books/audiobooks
+      - /mnt/ugreen/media/comics:/books/comics
     ports:
       - 3000:3000
     read_only: true
@@ -434,7 +436,7 @@ services:
         restart: true
 
   bookorbit-db:
-    image: pgvector/pgvector:pg18
+    image: pgvector/pgvector:0.8.6-pg18
     container_name: bookorbit-db
     restart: unless-stopped
     environment:
