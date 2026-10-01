@@ -436,7 +436,7 @@ services:
         restart: true
 
   bookorbit-db:
-    image: pgvector/pgvector:0.8.6-pg18
+    image: pgvector/pgvector:0.8.7-pg18
     container_name: bookorbit-db
     restart: unless-stopped
     environment:
