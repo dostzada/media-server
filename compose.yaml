@@ -388,7 +388,7 @@ services:
       - 8789:8789
 
   bookorbit:
-    image: ghcr.io/bookorbit/bookorbit:3.1.0
+    image: ghcr.io/bookorbit/bookorbit:3.3.0
     container_name: bookorbit
     restart: unless-stopped
     init: true
