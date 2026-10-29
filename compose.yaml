@@ -452,3 +452,19 @@ services:
       timeout: 5s
       retries: 10
       start_period: 20s
+
+  hawser:
+    image: ghcr.io/finsys/hawser:0.2.52
+    container_name: hawser
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOCKHAND_SERVER_URL=${HAWSER_SERVER_URL} # e.g. wss://your-dockhand.example.com/api/hawser/connect
+      - TOKEN=${HAWSER_TOKEN}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:2376/_hawser/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
