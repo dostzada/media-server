@@ -462,6 +462,8 @@ services:
     environment:
       - DOCKHAND_SERVER_URL=${HAWSER_SERVER_URL} # e.g. wss://your-dockhand.example.com/api/hawser/connect
       - TOKEN=${HAWSER_TOKEN}
+    ports:
+      - 2376:2376
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:2376/_hawser/health || exit 1"]
       interval: 30s
