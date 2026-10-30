@@ -459,7 +459,9 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /home/khaled/hawser-stacks:/opt/hawser-stacks
     environment:
+      - STACKS_DIR=/opt/hawser-stacks
       - DOCKHAND_SERVER_URL=${HAWSER_SERVER_URL} # e.g. wss://your-dockhand.example.com/api/hawser/connect
       - TOKEN=${HAWSER_TOKEN}
     ports:
