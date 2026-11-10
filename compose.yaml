@@ -370,7 +370,7 @@ services:
   # Both mount the same host folders and run as the same PUID/PGID, so files
   # Chaptarr imports show up in BookOrbit on its next library scan.
   chaptarr:
-    image: chaptarr/chaptarr:0.9.965
+    image: chaptarr/chaptarr:0.9.1000
     container_name: chaptarr
     restart: unless-stopped
     environment:
