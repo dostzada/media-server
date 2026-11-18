@@ -47,9 +47,6 @@ volumes:
     name: bookorbit
   bookorbit-db:
     name: bookorbit-db
-  bookorbit-read-aloud-worker-data:
-    name: bookorbit-read-aloud-worker-data
-
 
 services:
   # Torrent Clients
@@ -457,7 +454,7 @@ services:
       - READ_ALOUD_WORKER_TOKEN=${READ_ALOUD_WORKER_TOKEN}
       - TZ=${TZ}
     volumes:
-      - bookorbit-read-aloud-worker-data:/data
+      - /mnt/ugreen/media/read-aloud-worker:/data
     ports:
       - 8787:8787
 
