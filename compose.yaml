@@ -464,7 +464,7 @@ services:
     restart: unless-stopped
     environment:
       - PORT=8787
-      - TOKEN=${READ_ALOUD_WORKER_TOKEN}
+      - READ_ALOUD_WORKER_TOKEN=${READ_ALOUD_WORKER_TOKEN}
       - TZ=${TZ}
     ports:
       - 8787:8787
