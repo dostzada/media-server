@@ -455,6 +455,8 @@ services:
       - TZ=${TZ}
     volumes:
       - /mnt/ugreen/media/read-aloud-worker:/data
+      - /mnt/ugreen/media/books:/books
+      - /mnt/ugreen/media/audiobooks:/audiobooks
     ports:
       - 8787:8787
 
