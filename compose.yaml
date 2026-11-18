@@ -408,6 +408,10 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - COMPOSE_PROFILES=read-aloud
+      - READ_ALOUD_WORKER_URL=http://read-aloud-worker:8787
+      - READ_ALOUD_WORKER_TOKEN=${READ_ALOUD_WORKER_TOKEN}
+      - READ_ALOUD_WORKER_IMAGE=ghcr.io/bookorbit/bookorbit-read-aloud-worker:latest
     volumes:
       - bookorbit:/data
       # Same host folders Chaptarr imports into
