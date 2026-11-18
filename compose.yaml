@@ -47,6 +47,8 @@ volumes:
     name: bookorbit
   bookorbit-db:
     name: bookorbit-db
+  bookorbit-read-aloud-worker-data:
+    name: bookorbit-read-aloud-worker-data
 
 
 services:
@@ -466,6 +468,8 @@ services:
       - PORT=8787
       - READ_ALOUD_WORKER_TOKEN=${READ_ALOUD_WORKER_TOKEN}
       - TZ=${TZ}
+    volumes:
+      - bookorbit-read-aloud-worker-data:/data
     ports:
       - 8787:8787
 
