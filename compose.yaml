@@ -158,7 +158,7 @@ services:
 
   # Add the Arr Apps
   radarr:
-    image: linuxserver/radarr:6.4.4
+    image: linuxserver/radarr:7.0.3
     container_name: radarr
     environment:
       - PUID=${PUID}
