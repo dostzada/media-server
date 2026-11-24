@@ -243,7 +243,7 @@ services:
       - 5656:5656
 
   cleanuparr:
-    image: ghcr.io/cleanuparr/cleanuparr:2.11.1
+    image: ghcr.io/cleanuparr/cleanuparr:2.11.2
     container_name: cleanuparr
     restart: unless-stopped
     ports:
