@@ -461,7 +461,7 @@ services:
       - 8787:8787
 
   hawser:
-    image: ghcr.io/finsys/hawser:0.2.53
+    image: ghcr.io/finsys/hawser:0.2.54
     container_name: hawser
     restart: unless-stopped
     volumes:
